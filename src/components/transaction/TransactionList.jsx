@@ -16,8 +16,6 @@ const TransactionList = () => {
     setEditTx({});
   };
 
-  console.log(role);
-
   return (
     <div className="p-4 m-3 bg-white rounded shadow-md overflow-x-auto">
       <h3 className="text-gray-700 font-medium mb-4 text-2xl text-center">

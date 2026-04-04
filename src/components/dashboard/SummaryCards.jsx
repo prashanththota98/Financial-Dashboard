@@ -2,7 +2,6 @@ import { useUser } from "../../context/UserContext";
 
 const SummaryCards = () => {
   const { summaries } = useUser();
-  console.log(summaries);
   return (
     <div className="flex md:flex-row gap-4 p-4">
       {summaries.map((item) => (
