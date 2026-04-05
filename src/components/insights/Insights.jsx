@@ -1,38 +1,92 @@
-const insights = [
-  {
-    label: "Highest Income",
-    value: "Dec ($4,500)",
-    color: "text-green-600",
-    bg: "bg-green-50",
-  },
-  {
-    label: "Top Expense",
-    value: "Food ($1,200)",
-    color: "text-red-600",
-    bg: "bg-red-50",
-  },
-  {
-    label: "Savings Goal",
-    value: "80% Completed",
-    color: "text-blue-600",
-    bg: "bg-blue-50",
-  },
-];
+import { useUser } from "../../context/UserContext";
+import { useMemo } from "react";
+import { FormatCurrency } from "../../utils/FormatCurrency";
+import { useSystem } from "../../context/SystemContext";
 
 const Insights = () => {
+  const { transactions } = useUser();
+  const { darkMode } = useSystem();
+
+  const calculatedInsights = useMemo(() => {
+    if (!transactions || transactions.length === 0) return [];
+    const monthlySummary = transactions.reduce((acc, curr) => {
+      const monthName = new Date(curr.date).toLocaleString("en-IN", {
+        month: "short",
+        year: "numeric",
+      });
+      if (!acc[monthName]) {
+        acc[monthName] = { income: 0, expense: 0 };
+      }
+      if (curr.type === "Income") {
+        acc[monthName].income += curr.amount;
+      } else {
+        acc[monthName].expense += curr.amount;
+      }
+      return acc;
+    }, {});
+
+    const monthlyArray = Object.entries(monthlySummary).map(([name, data]) => ({
+      name,
+      ...data,
+    }));
+
+    const topMonth = [...monthlyArray].sort((a, b) => b.income - a.income)[0];
+
+    const categoryTotal = transactions
+      .filter((exp) => exp.type === "Expense")
+      .reduce((acc, curr) => {
+        acc[curr.category] = (acc[curr.category] || 0) + curr.amount;
+        return acc;
+      }, {});
+
+    const topCategory = Object.entries(categoryTotal).sort(
+      (a, b) => b[1] - a[1],
+    );
+    const topPair = topCategory[0] || ["N/A", 0];
+    console.log(topCategory);
+
+    const totalIncome = transactions
+      .filter((total) => total.type === "Income")
+      .reduce((sum, curr) => sum + curr.amount, 0);
+
+    const totalExpense = transactions
+      .filter((total) => total.type === "Expense")
+      .reduce((sum, curr) => sum + curr.amount, 0);
+
+    const savingsRate =
+      totalIncome > 0
+        ? Math.round(((totalIncome - totalExpense) / totalIncome) * 100)
+        : 0;
+
+    return [
+      {
+        label: "Highest Income Month",
+        value: `${topMonth.name} ${FormatCurrency(topMonth.income)}`,
+        color: "text-green-600",
+      },
+      {
+        label: "Top Spending Area",
+        value: `${topPair[0]} ${FormatCurrency(topPair[1])}`,
+        color: "text-red-600",
+      },
+      {
+        label: "Savings Efficiency",
+        value: `${savingsRate}% of income`,
+        color: "text-blue-600",
+      },
+    ];
+  }, [transactions]);
   return (
-    <div className="flex md:flex-row gap-4 p-4">
-      {insights.map((item, i) => (
+    <div className="flex justify-between p-4 gap-4">
+      {calculatedInsights.map((item, i) => (
         <div
           key={i}
-          className={`p-4 rounded-xl shadow-sm border ${item.bg} flex flex-1 flex-col text-center`}
+          className={`${darkMode ? "bg-gray-800" : "bg-gray-300"} p-6 rounded-2xl border-none shadow-sm flex flex-1 flex-col items-center justify-center transition-all hover:scale-[1.02]  cursor-default hover:scale-105 hover:-translate-y-0.5 transform  duration-300 hover:shadow-xl`}
         >
-          <span className="text-xs font-bold uppercase opacity-70">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">
             {item.label}
           </span>
-          <span className={`text-lg font-bold ${item.color}`}>
-            {item.value}
-          </span>
+          <p className={`text-xl font-black ${item.color}`}>{item.value}</p>
         </div>
       ))}
     </div>

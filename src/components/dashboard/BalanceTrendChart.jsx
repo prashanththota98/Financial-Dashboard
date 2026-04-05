@@ -1,4 +1,5 @@
 import { useUser } from "../../context/UserContext";
+import { useSystem } from "../../context/SystemContext";
 import {
   LineChart,
   Line,
@@ -7,11 +8,15 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { FormatCurrency } from "../../utils/FormatCurrency";
 
 const BalanceTrendChart = () => {
   const { charts } = useUser();
+  const { darkMode } = useSystem();
   return (
-    <div className="p-4 m-3 flex flex-col bg-white rounded shadow-md lg:w-[50%] lg:mt-6 focus:outline-none border-none">
+    <div
+      className={`p-4 m-3 flex flex-col ${darkMode ? "bg-gray-800" : "bg-gray-300"} rounded shadow-md lg:w-[50%] lg:mt-6 focus:outline-none border-none`}
+    >
       <style>
         {`
         *:focus {
@@ -19,7 +24,9 @@ const BalanceTrendChart = () => {
         }
       `}
       </style>
-      <h3 className="text-gray-700 font-medium mb-2 text-center text-2xl">
+      <h3
+        className={`${darkMode ? "text-gray-300" : "text-gray-800"} font-medium mb-2 text-center text-2xl`}
+      >
         Balance Trend
       </h3>
       <ResponsiveContainer
@@ -35,11 +42,18 @@ const BalanceTrendChart = () => {
           <XAxis
             dataKey="name"
             interval={0}
-            tick={{ fontSize: 14, angle: -45, textAnchor: "end" }}
+            tick={{
+              fontSize: 14,
+              angle: -45,
+              textAnchor: "end",
+              fill: darkMode ? "#E5E7EB" : "#1F2937",
+            }}
             style={{ pointerEvents: "none" }}
           />
-          <YAxis tick={{ fontSize: 14 }} />
-          <Tooltip />
+          <YAxis
+            tick={{ fontSize: 14, fill: darkMode ? "#E5E7EB" : "#1F2937" }}
+          />
+          <Line type="monotone" dataKey="expense" stroke="#ff0202" />
           <Line
             type="monotone"
             dataKey="income"
@@ -48,12 +62,8 @@ const BalanceTrendChart = () => {
             dot={{ r: 4 }}
             style={{ pointerEvents: "none" }}
           />
-          <Line
-            type="monotone"
-            dataKey="expense"
-            stroke="#ff0202"
-            onFocus={(e) => e.target.blur()}
-          />
+
+          <Tooltip formatter={(value) => FormatCurrency(value)} />
         </LineChart>
       </ResponsiveContainer>
     </div>

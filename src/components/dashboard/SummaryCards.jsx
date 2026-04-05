@@ -1,27 +1,25 @@
 import { useUser } from "../../context/UserContext";
+import { FormatCurrency } from "../../utils/FormatCurrency";
+import { useSystem } from "../../context/SystemContext";
 
 const SummaryCards = () => {
   const { summaries } = useUser();
+  const { darkMode } = useSystem();
+
   return (
     <div className="flex md:flex-row gap-4 p-4">
       {summaries.map((item) => (
         <div
           key={item.id}
-          className="flex-1 border rounded-lg shadow-md p-4 bg-white text-center"
+          className={`${darkMode ? "bg-gray-800" : "bg-gray-300"} ${item.value > 0 && item.label !== "Monthly Expenses" ? (darkMode ? "text-green-600" : "text-green-900") : item.label === "Monthly Expenses" ? (darkMode ? "text-red-600" : "text-red-600") : darkMode ? "text-red-600" : "text-red-500"}
+          flex-1 border-none rounded-lg shadow-md p-4 text-center hover:scale-105 hover:-translate-y-0.5 transform transition-all duration-300 hover:shadow-xl`}
         >
-          <h3 className="text-sm font-medium text-gray-500">{item.label}</h3>
-          <p className="text-lg font-bold text-gray-900">
-            {item.value.toLocaleString()}
-          </p>
-          {item.trend && (
-            <p
-              className={`text-sm font-semibold ${
-                item.isPositive ? "text-green-500" : "text-red-500"
-              }`}
-            >
-              {item.trend}
-            </p>
-          )}
+          <h3
+            className={`text-sm font-medium ${darkMode ? "text-gray-200" : "text-gray-900"}`}
+          >
+            {item.label}
+          </h3>
+          <p className={`text-lg font-bold `}>{FormatCurrency(item.value)}</p>
         </div>
       ))}
     </div>

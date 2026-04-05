@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { transactionsData } from "../data/Mockdata";
 
 const getSummary = (transactions) => {
@@ -15,21 +15,18 @@ const getSummary = (transactions) => {
       id: 1,
       label: "Total Balance",
       value: income - expense,
-      trend: "+12.5%",
       isPositive: true,
     },
     {
       id: 2,
       label: "Monthly Income",
       value: income,
-      trend: "+3.2%",
       isPositive: true,
     },
     {
       id: 3,
       label: "Monthly Expenses",
       value: expense,
-      trend: "-1.8%",
       isPositive: false,
     },
   ];
@@ -52,7 +49,7 @@ const getMonthlyChartData = (transactions) => {
   ];
 
   const monthlyData = months.map((month, index) => {
-    const monthNumber = index + 1; // 1 for Jan, 2 for Feb
+    const monthNumber = index + 1;
     const monthlyTransactions = transactions.filter(
       (t) => new Date(t.date).getMonth() + 1 === monthNumber,
     );
@@ -74,10 +71,27 @@ const getMonthlyChartData = (transactions) => {
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [transactions, setTransactions] = useState(transactionsData);
+  // const [transactions, setTransactions] = useState(transactionsData);
+  const [transactions, setTransactions] = useState(() => {
+    const saved = localStorage.getItem("saved_Transactions");
+    if (saved !== null) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error("Local stotage empty", e);
+        return transactionsData;
+      }
+    }
+    return transactionsData;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("saved_Transactions", JSON.stringify(transactions));
+  }, [transactions]);
   const summaries = getSummary(transactions);
+
   const charts = getMonthlyChartData(transactions);
-  const [role, setRole] = useState("viewer");
+  const [role, setRole] = useState("Viewer");
   return (
     <UserContext.Provider
       value={{

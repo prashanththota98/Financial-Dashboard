@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useUser } from "../../context/UserContext";
+import { useSystem } from "../../context/SystemContext";
 import {
   PieChart,
   Pie,
@@ -8,11 +9,13 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { FormatCurrency } from "../../utils/FormatCurrency";
 
 const COLORS = ["#4f46e5", "#e11d48", "#f59e0b", "#10b981", "#6366f1"];
 
 const CategoryPieChart = () => {
   const { transactions } = useUser();
+  const { darkMode } = useSystem();
 
   const categoryData = useMemo(() => {
     return Object.values(
@@ -26,40 +29,42 @@ const CategoryPieChart = () => {
         }, {}),
     );
   }, [transactions]);
+  if (!categoryData || categoryData.length === 0) {
+    return (
+      <p className="text-center text-gray-500">No expense data available</p>
+    );
+  }
   return (
-    <div className=" p-4 m-3 flex flex-col bg-white rounded shadow-md mt-4 lg:mt-6 lg:w-[50%] focus:outline-none border-none">
-      <h3 className="text-gray-700 font-medium mb-2 text-2xl text-center">
+    <div
+      className={`${darkMode ? "bg-gray-800" : "bg-gray-300"} p-4 m-3 flex flex-col rounded shadow-md mt-4 lg:mt-6 lg:w-[50%] focus:outline-none border-none`}
+    >
+      <h3
+        className={` ${darkMode ? "text-gray-300" : "text-gray-800"} font-medium mb-2 text-2xl text-center`}
+      >
         Spending Breakdown
       </h3>
-      <ResponsiveContainer width="100%" height={250} focusable={false}>
+      <ResponsiveContainer width="100%" height={250}>
         <PieChart>
           <Pie
             data={categoryData}
             dataKey="value"
             nameKey="name"
-            cx="35%"
-            cy="55%"
+            cx="50%"
+            cy="50%"
             outerRadius={90}
             fill="#8884d8"
-            label
+            label={false}
             stroke="none"
-            activeIndex={-1}
-            tabIndex={-1}
-            isAnimationActive={true}
-            onMouseEnter={() => {}}
-            onFocus={(e) => e.target.blur()}
           >
             {categoryData.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}
                 stroke="none"
-                tabIndex={-1}
-                style={{ outline: "none" }}
               />
             ))}
           </Pie>
-          <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+          <Tooltip formatter={(value) => FormatCurrency(value)} />
           <Legend
             layout="vertical"
             align="right"
