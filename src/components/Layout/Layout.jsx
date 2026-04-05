@@ -9,7 +9,7 @@ const Layout = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const { darkMode } = useSystem();
   return (
-    <div className=" bg-slate-50">
+    <div className={` ${darkMode ? "bg-slate-900" : "bg-slate-300"}`}>
       <Header isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
       <Sidebar
         isMobileOpen={isMobileOpen}
@@ -17,7 +17,7 @@ const Layout = () => {
         aria-label="Main Sidebar"
       />
       <div className="md:ml-64 transition-all duration-300">
-        <main className={` ${darkMode ? "bg-gray-900" : "bg-gray-300"}`}>
+        <main className={`flex-1 ${darkMode ? "bg-gray-900" : "bg-gray-300"}`}>
           <Outlet />
         </main>
       </div>

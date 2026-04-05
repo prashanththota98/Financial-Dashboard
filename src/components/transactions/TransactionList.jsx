@@ -95,7 +95,7 @@ const TransactionList = () => {
   };
 
   return (
-    <div className={` m-3 rounded shadow-md overflow-x-auto`}>
+    <div className={`m-3 rounded shadow-md overflow-x-auto min-h-full`}>
       <h3
         className={`font-medium ml-2 text-2xl ${darkMode ? "text-gray-300" : "text-gray-700"}`}
       >
@@ -110,7 +110,7 @@ const TransactionList = () => {
           placeholder="search by name or category..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border p-2 rounded w-full md:w-1/3"
+          className="border p-2 rounded w-full md:w-1/3 placeholder-gray-500"
         />
 
         <select
@@ -140,7 +140,9 @@ const TransactionList = () => {
         </button>
       </div>
 
-      <table className="w-full text-left border-collapse">
+      <table
+        className={`w-full text-left border-collapse h-full ${darkMode ? "bg-gray-800" : "bg-gray-300"} `}
+      >
         <thead>
           <tr className={`${darkMode ? "text-gray-300" : "text-gray-700"}`}>
             <th className="p-2 border">Date</th>
