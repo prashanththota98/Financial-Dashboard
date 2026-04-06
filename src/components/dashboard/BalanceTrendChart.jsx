@@ -1,3 +1,10 @@
+/**
+ * Component: BalanceTrendChat
+ * Description: visualize shows data income and expense monthly
+ * Highlights: Handles fallback and darkmode
+ * Others: used style to remove browser svg outline tried using tailwind focus and tabIndex -1 but they didnt worked
+ */
+
 import { useUser } from "../../context/UserContext";
 import { useSystem } from "../../context/SystemContext";
 import {
@@ -8,15 +15,16 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { FormatCurrency } from "../../utils/FormatCurrency";
+import { FormatCurrency } from "../../utils/FormatCurrency"; // currenct formatter to rupees from utils
 
 const BalanceTrendChart = () => {
   const { charts } = useUser();
   const { darkMode } = useSystem();
 
-  const hasData = charts && charts.some((c) => c.income > 0 || c.expense > 0);
+  const hasData = charts && charts.some((c) => c.income > 0 || c.expense > 0); //checking data if empty
 
   if (!hasData) {
+    //handling empty data
     return (
       <p
         className={`h-[250px] ${darkMode ? "bg-gray-800 text-gray-300" : "bg-gray-300"} p-4 m-3 rounded-xl shadow-md mt-4 lg:mt-6 lg:w-[50%] focus:outline-none border-none flex  flex-col items-center justify-center`}
@@ -57,7 +65,7 @@ const BalanceTrendChart = () => {
             interval={0}
             tick={{
               fontSize: 14,
-              angle: -45,
+              angle: -45, //rotated names to avoid overlap
               textAnchor: "end",
               fill: darkMode ? "#E5E7EB" : "#1F2937",
             }}
@@ -78,7 +86,7 @@ const BalanceTrendChart = () => {
             dataKey="income"
             stroke="#4bec04"
             strokeWidth={2}
-            dot={{ r: 0 }}
+            dot={{ r: 0 }} // removed dots to make lines look cleaner
             style={{ pointerEvents: "none" }}
           />
 

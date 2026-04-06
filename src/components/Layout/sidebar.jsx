@@ -1,4 +1,4 @@
-import { LayoutDashboard, ReceiptText, ShieldCheck, Eye } from "lucide-react";
+import { LayoutDashboard, ReceiptText } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {

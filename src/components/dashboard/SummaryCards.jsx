@@ -1,3 +1,9 @@
+/**
+ * Component: Summarycards
+ * Description: Displays summary cards for total balance, current month Income, last month income, and present month expenses
+ * Highlight positive and negative balances with color coding
+ */
+
 import { useUser } from "../../context/UserContext";
 import { FormatCurrency } from "../../utils/FormatCurrency";
 import { useSystem } from "../../context/SystemContext";

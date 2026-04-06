@@ -1,6 +1,11 @@
+/**
+ * Component: Layout
+ * Description: main page layout for pages including header, sidebar, main content and used react router dom outlet to render child routes
+ * Highlight: component that is similar to hoc by wrapping main content
+ */
+
 import { Outlet } from "react-router-dom";
 import { useSystem } from "../../context/SystemContext";
-
 import { useState } from "react";
 import Sidebar from "./sidebar";
 import Header from "./Header";

@@ -1,3 +1,9 @@
+/**
+ * Component: CategoricalPieCharts
+ * Description: displays visually on what category the user spends money
+ * Highlights: shows present month expenses and used usememo to avaoid re calculations
+ */
+
 import { useMemo } from "react";
 import { useUser } from "../../context/UserContext";
 import { useSystem } from "../../context/SystemContext";

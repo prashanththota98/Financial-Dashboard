@@ -1,3 +1,9 @@
+/**
+ * Component: Insights
+ * Description: shows information like highest Income month, highest spend on category and lowest spend category and saving percentage
+ * Highlights: used dynamic values to get updated when values change and use usememo to avoid re-calculations
+ */
+
 import { useUser } from "../../context/UserContext";
 import { useMemo } from "react";
 import { FormatCurrency } from "../../utils/FormatCurrency";
@@ -9,6 +15,7 @@ const Insights = () => {
 
   const calculatedInsights = useMemo(() => {
     if (!transactions || transactions.length === 0) return [];
+    // function to make months with year and expense and income as values for months with year like object
     const monthlySummary = transactions.reduce((acc, curr) => {
       const monthName = new Date(curr.date).toLocaleString("en-IN", {
         month: "short",
@@ -25,12 +32,13 @@ const Insights = () => {
       return acc;
     }, {});
 
+    //making an array from monthly summary to use array methods making moth and values as single object
     const monthlyArray = Object.entries(monthlySummary).map(([name, data]) => ({
       name,
       ...data,
     }));
 
-    const topMonth = [...monthlyArray].sort((a, b) => b.income - a.income)[0];
+    const topMonth = [...monthlyArray].sort((a, b) => b.income - a.income)[0]; // sort to get month with highest income
 
     const categoryTotal = transactions
       .filter((exp) => exp.type === "Expense")
@@ -39,11 +47,13 @@ const Insights = () => {
         return acc;
       }, {});
 
+    //sort to get highest spending category
     const topCategory = Object.entries(categoryTotal).sort(
       (a, b) => b[1] - a[1],
     );
     const topPair = topCategory[0] || ["N/A", 0];
 
+    // spending to get lowest spending category
     const leastCategory = Object.entries(categoryTotal).sort(
       (a, b) => a[1] - b[1],
     );
@@ -57,6 +67,7 @@ const Insights = () => {
       .filter((total) => total.type === "Expense")
       .reduce((sum, curr) => sum + curr.amount, 0);
 
+    // to find savings rate
     const savingsRate =
       totalIncome > 0
         ? Math.round(((totalIncome - totalExpense) / totalIncome) * 100)
