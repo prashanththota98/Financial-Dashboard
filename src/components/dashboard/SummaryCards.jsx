@@ -7,12 +7,12 @@ const SummaryCards = () => {
   const { darkMode } = useSystem();
 
   return (
-    <div className="flex md:flex-row gap-4 p-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4 animate-fadeIn">
       {summaries.map((item) => (
         <div
           key={item.id}
           className={`${darkMode ? "bg-gray-800" : "bg-gray-300"} ${item.value > 0 && item.label !== "Monthly Expenses" ? (darkMode ? "text-green-600" : "text-green-900") : item.label === "Monthly Expenses" ? (darkMode ? "text-red-600" : "text-red-600") : darkMode ? "text-red-600" : "text-red-500"}
-          flex-1 border-none rounded-lg shadow-md p-4 text-center hover:scale-105 hover:-translate-y-0.5 transform transition-all duration-300 hover:shadow-xl`}
+          flex-1 border-none rounded-lg shadow-md p-4 text-center hover:scale-105 hover:-translate-y-0.5 transform transition-all duration-300 hover:shadow-xl animate-slideUp`}
         >
           <h3
             className={`text-sm font-medium ${darkMode ? "text-gray-200" : "text-gray-900"}`}

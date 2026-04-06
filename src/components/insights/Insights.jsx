@@ -43,7 +43,11 @@ const Insights = () => {
       (a, b) => b[1] - a[1],
     );
     const topPair = topCategory[0] || ["N/A", 0];
-    console.log(topCategory);
+
+    const leastCategory = Object.entries(categoryTotal).sort(
+      (a, b) => a[1] - b[1],
+    );
+    const leastPair = leastCategory[0] || ["N/A", 0];
 
     const totalIncome = transactions
       .filter((total) => total.type === "Income")
@@ -70,25 +74,41 @@ const Insights = () => {
         color: "text-red-600",
       },
       {
+        label: "Least Spending Area",
+        value: `${leastPair[0]} ${FormatCurrency(leastPair[1])}`,
+        color: "text-yellow-600",
+      },
+      {
         label: "Savings Efficiency",
         value: `${savingsRate}% of income`,
         color: "text-blue-600",
       },
     ];
   }, [transactions]);
+
   return (
-    <div className="flex justify-between p-4 gap-4">
-      {calculatedInsights.map((item, i) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 p-4 gap-4 animate-fadeIn animate-slideUp">
+      {calculatedInsights.length === 0 ? (
         <div
-          key={i}
-          className={`${darkMode ? "bg-gray-800" : "bg-gray-300"} p-6 rounded-2xl border-none shadow-sm flex flex-1 flex-col items-center justify-center transition-all hover:scale-[1.02]  cursor-default hover:scale-105 hover:-translate-y-0.5 transform  duration-300 hover:shadow-xl`}
+          className={`${darkMode ? "bg-gray-800 text-gray-300" : "bg-gray-300 text-gray-800"} w-full p-6 rounded-xl text-center shadow-md`}
         >
-          <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">
-            {item.label}
-          </span>
-          <p className={`text-xl font-black ${item.color}`}>{item.value}</p>
+          No Insight available
         </div>
-      ))}
+      ) : (
+        calculatedInsights.map((item, i) => (
+          <div
+            key={i}
+            className={`${darkMode ? "bg-gray-800" : "bg-gray-300"} p-6 rounded-2xl border-none shadow-sm flex flex-1 flex-col items-center justify-center transition-all hover:scale-[1.02]  cursor-default hover:scale-105 hover:-translate-y-0.5 transform  duration-300 hover:shadow-xl`}
+          >
+            <span
+              className={`text-[10px] font-bold uppercase tracking-widest ${darkMode ? "text-gray-200" : "text-gray-900"} mb-1`}
+            >
+              {item.label}
+            </span>
+            <p className={`text-xl font-black ${item.color}`}>{item.value}</p>
+          </div>
+        ))
+      )}
     </div>
   );
 };

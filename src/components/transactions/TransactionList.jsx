@@ -110,7 +110,7 @@ const TransactionList = () => {
           placeholder="search by name or category..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border p-2 rounded w-full md:w-1/3 placeholder-gray-500"
+          className="border p-2 rounded w-full md:w-1/3 placeholder-gray-500 outline-none"
         />
 
         <select
@@ -156,7 +156,10 @@ const TransactionList = () => {
         <tbody>
           {filteredTransactions.length === 0 && (
             <tr>
-              <td colSpan={role === "Admin" ? 6 : 5}>
+              <td
+                colSpan={role === "Admin" ? 6 : 5}
+                className={`text-center ${darkMode ? "text-gray-300" : "text-gray-800"} h-5`}
+              >
                 No transactions available
               </td>
             </tr>
@@ -178,7 +181,7 @@ const TransactionList = () => {
                             [field]: e.target.value,
                           }))
                         }
-                        className="border rounded p-1"
+                        className="border rounded p-1 outline-none"
                       >
                         <option value="Income">Income</option>
                         <option value="Expense">Expense</option>
@@ -193,7 +196,7 @@ const TransactionList = () => {
                             [field]: e.target.value,
                           }))
                         }
-                        className={` border rounded p-1 w-24`}
+                        className={` border rounded p-1 w-24 outline-none`}
                       />
                     ) : (
                       <span>{tx[field]}</span>

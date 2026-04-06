@@ -5,9 +5,48 @@ const getSummary = (transactions) => {
   let income = 0;
   let expense = 0;
 
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1;
+  const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+
+  let currentMonthIncome = 0;
+  let currentMonthExpense = 0;
+  let lastMonthIncome = 0;
+  let lastMonthExpense = 0;
+
   transactions.forEach((t) => {
-    if (t.type.toLowerCase() === "income") income += t.amount;
-    else expense += t.amount;
+    const transactionMonth = new Date(t.date).getMonth() + 1;
+    const transactionYear = new Date(t.date).getFullYear();
+
+    if (t.type.toLowerCase() === "income") {
+      income += t.amount;
+      if (
+        transactionMonth === currentMonth &&
+        transactionYear === currentDate.getFullYear()
+      ) {
+        currentMonthIncome += t.amount;
+      }
+      if (
+        transactionMonth === lastMonth &&
+        transactionYear === currentDate.getFullYear()
+      ) {
+        lastMonthIncome += t.amount;
+      }
+    } else if (t.type.toLowerCase() === "expense") {
+      expense += t.amount;
+      if (
+        transactionMonth === currentMonth &&
+        transactionYear === currentDate.getFullYear()
+      ) {
+        currentMonthExpense += t.amount;
+      }
+      if (
+        transactionMonth === lastMonth &&
+        transactionYear === currentDate.getFullYear()
+      ) {
+        lastMonthExpense += t.amount;
+      }
+    }
   });
 
   return [
@@ -19,14 +58,20 @@ const getSummary = (transactions) => {
     },
     {
       id: 2,
-      label: "Monthly Income",
-      value: income,
+      label: "last Month Income",
+      value: lastMonthIncome,
       isPositive: true,
     },
     {
       id: 3,
+      label: "Current Month Income",
+      value: currentMonthIncome,
+      isPositive: true,
+    },
+    {
+      id: 4,
       label: "Monthly Expenses",
-      value: expense,
+      value: currentMonthExpense,
       isPositive: false,
     },
   ];

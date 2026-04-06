@@ -17,7 +17,7 @@ const Header = ({ isMobileOpen, setIsMobileOpen }) => {
       </button>
       <div className="flex items-center">
         <select
-          className={`p-2 ${darkMode ? "text-gray-300 bg-slate-900" : "text-gray-800 bg-gray-300"}`}
+          className={`p-2 ${darkMode ? "text-gray-300 bg-slate-900" : "text-gray-800 bg-gray-300 outline-none"}`}
           value={role}
           onChange={(e) => setRole(e.target.value)}
         >
