@@ -30,8 +30,8 @@ Setup instructions
 
 - clone: git clone https://github.com/prashanththota98/prashanth-thota-zorvyn-assessment.git
 - navigate to project folder: prashanth-thota-zorvyn-assessment
-- run: npm install
-- run: npm run dev
+- install dependencies: npm install
+- start dev server: npm run dev
 - port: http://localhost:5173
 
 Notes
@@ -44,7 +44,30 @@ Live Demo
 
 https://prashanth-thota-zorvyn-assessment.vercel.app
 
-## 🧠 Development Approach & Decisions
+Screenshorts
+Desktop:
+lightmode Dashboard - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775488910/ Screenshot_2026-04-06_204908_nf9vtx.png
+
+lightmode Transaction - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775488920/Screenshot_2026-04-06_204849_at5cdd.png
+
+darkmode Dashboard - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775488929/Screenshot_2026-04-06_204758_g0x7fb.png
+
+darkmode Transaction - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775488939/Screenshot_2026-04-06_204831_i1tfwk.png
+
+Mobile:
+lightmode Dashboard - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775489646/Screenshot_2026-04-06-20-47-17-160_com.android.chrome_w14v1n.jpg
+https://res.cloudinary.com/dn2qzuhss/image/upload/v1775489640/Screenshot_2026-04-06-20-47-24-164_com.android.chrome_y5vicf.jpg
+
+lightmode sidebar - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775489652/Screenshot_2026-04-06-20-47-11-132_com.android.chrome_oessba.jpg
+
+lightmide- transaction - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775489937/Screenshot_2026-04-06-21-07-05-324_com.android.chrome_qviqyx.jpg
+
+darkmode dashboard - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775489664/Screenshot_2026-04-06-20-46-59-969_com.android.chrome_apglsl.jpg
+https://res.cloudinary.com/dn2qzuhss/image/upload/v1775489659/Screenshot_2026-04-06-20-47-05-306_com.android.chrome_smdiep.jpg
+
+darkmode - transaction - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775489929/Screenshot_2026-04-06-21-07-15-993_com.android.chrome_ksksl6.jpg
+
+## Development Approach & Decisions
 
 - **Understanding the Problem & Data**
   Researched how financial dashboards categorize transactions (Food, Travel, Salary, etc.) and explored **Merchant Category Codes (MCC)** for realistic expense categorization.
@@ -88,7 +111,7 @@ https://prashanth-thota-zorvyn-assessment.vercel.app
   - Keeping logic simple and component-scoped
   - Prioritizing clarity and maintainability over complexity
 
-## 🧩 Data Flow & Design Choice
+## Data Flow & Design Choice
 
 - Followed a **centralized data approach**, where all components derive their values from a single source of truth (transactions data).
 
