@@ -28,9 +28,9 @@ const CategoryPieChart = () => {
   const categoryData = useMemo(() => {
     return Object.values(
       transactions
-        .filter((tx) => tx.type === "Expense")
-        .filter((tx) => new Date(tx.date).getMonth() + 1 === currentMonth)
-        .reduce((acc, tx) => {
+        .filter((tx) => tx.type === "Expense") //filtering expences from transactions
+        .filter((tx) => new Date(tx.date).getMonth() + 1 === currentMonth) //filtering current month transactions
+        .reduce((acc, tx) => {   // making key value pairs to combine all repeated keys to make one and add values
           if (!acc[tx.category])
             acc[tx.category] = { name: tx.category, value: 0 };
           acc[tx.category].value += tx.amount;
@@ -39,7 +39,9 @@ const CategoryPieChart = () => {
     );
   }, [transactions]);
 
-  const totalExpense = categoryData.reduce((sum, curr) => sum + curr.value, 0);
+  const totalExpense = categoryData.reduce((sum, curr) => sum + curr.value, 0); // for displaying sum of expenses in the center of piechart
+
+  // fallback if no data 
   if (!categoryData || categoryData.length === 0) {
     return (
       <p

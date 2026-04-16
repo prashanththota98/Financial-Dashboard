@@ -1,3 +1,8 @@
+/**
+ * Component: Header
+ * Description: user role selection logic admin viewer and theme selection logic
+ */
+
 import { useUser } from "../../context/UserContext";
 import { useSystem } from "../../context/SystemContext";
 import { Menu, Moon, Sun } from "lucide-react";

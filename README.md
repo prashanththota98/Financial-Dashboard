@@ -1,10 +1,3 @@
-## Candidate Information
-
-- **Name:** Prashanth Thota
-- **Email:** prashanththota678@gmail.com
-- **Reference ID:** TEQZHL5L
-- **Position:** Frontend Developer Intern
-
 Project Overview
 
 This repository contains a Personal Finance Dashboard built with React. The dashboard helps users track their finances, visualize trends, and gain insights into their spending habits
@@ -49,6 +42,8 @@ Desktop:
 lightmode Dashboard - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775488910/ Screenshot_2026-04-06_204908_nf9vtx.png
 
 lightmode Transaction - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775488920/Screenshot_2026-04-06_204849_at5cdd.png
+
+admin transaction - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775490030/Screenshot_2026-04-06_211008_vskenk.png
 
 darkmode Dashboard - https://res.cloudinary.com/dn2qzuhss/image/upload/v1775488929/Screenshot_2026-04-06_204758_g0x7fb.png
 

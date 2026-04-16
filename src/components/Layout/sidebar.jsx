@@ -1,3 +1,9 @@
+/**
+ * Component: Sidebar
+ * Description: provides easy page navigation includes navlinks for Dashboard and transactions 
+ * Highlights: can hide in small devices because of space constraint and cannot from md 
+ */
+
 import { LayoutDashboard, ReceiptText } from "lucide-react";
 import { NavLink } from "react-router-dom";
 

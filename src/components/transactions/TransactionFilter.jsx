@@ -1,3 +1,8 @@
+/**
+ * Component: TrasactionFilter
+ * Description: handles inputs for search, filter, sorting and export csv
+ */
+
 import { Download } from "lucide-react";
 
 const TransactionFilter = ({

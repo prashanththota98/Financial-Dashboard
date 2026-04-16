@@ -1,8 +1,8 @@
 /**
- * Component: BalanceTrendChat
+ * Component: BalanceTrendChart
  * Description: visualize shows data income and expense monthly
  * Highlights: Handles fallback and darkmode
- * Others: used style to remove browser svg outline tried using tailwind focus and tabIndex -1 but they didnt worked
+ * Others: used style to remove browser svg outline tried using tailwind focus and tabIndex -1 but they didn't worked
  */
 
 import { useUser } from "../../context/UserContext";
